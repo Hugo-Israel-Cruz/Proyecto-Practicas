@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>JUSDATA - Inicio</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<button class="boton-menu" onclick="abrirMenu()">☰</button>
+
+<aside id="menuLateral" class="menu-lateral">
+    <button class="cerrar-menu" onclick="cerrarMenu()">×</button>
+    <h3>Menú de procedimientos</h3>
+
+    <button class="categoria" onclick="mostrarSubmenu('submenuCivil', 'flechaCivil')">
+        Derecho civil y familiar
+        <span id="flechaCivil">▾</span>
+    </button>
+
+    <div id="submenuCivil" class="submenu">
+        <a href="/tramite">Divorcio</a>
+        <a href="/custodia">Custodia</a>
+    </div>
+
+    <button class="categoria" onclick="mostrarSubmenu('submenuAduanero', 'flechaAduanero')">
+        Derecho aduanero
+        <span id="flechaAduanero">▾</span>
+    </button>
+
+    <div id="submenuAduanero" class="submenu">
+        <a href="/despacho">Despacho de las mercancías</a>
+        <a href="/pama">PAMA</a>
+    </div>
+</aside>
+
+<header>
+    <div class="logo"><a href="/inicio">JUSDATA</a></div>
+    <nav>
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/tramite">Trámites</a></li>
+            <li><a href="">Contacto</a></li>
+            <li><a href="/login">Iniciar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="bienvenida">
+    <h2>Bienvenid@</h2>
+    <form class="buscador">
+        <input type="text" placeholder="Buscar trámite" name="busqueda">
+        <button type="submit">Buscar</button>
+    </form>
+</section>
+
+<div class="contenedor-tarjetas">
+    <div class="tarjeta">
+        <img src="/img/img-1.png" alt="Procedimiento de divorcio">
+        <div class="contenido-tarjeta">
+            <div>
+                <p class="titulo">Procedimiento de Divorcio</p>
+                <p class="descripcion">Proporciona la información requerida y comienza tu procedimiento de divorcio en línea.</p>
+            </div>
+            <a href="/tramite" class="boton">Comenzar procedimiento</a>
+        </div>
+    </div>
+
+    <div class="tarjeta">
+        <img src="/img/img-2.png" alt="Seguimiento del proceso">
+        <div class="contenido-tarjeta">
+            <div>
+                <p class="titulo">Seguimiento del proceso</p>
+                <p class="descripcion">Consulta el estado actual de tu proceso de divorcio.</p>
+            </div>
+            <a href="/seguimiento" class="boton">Consultar proceso</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function abrirMenu() {
+        document.getElementById("menuLateral").classList.add("abierto");
+    }
+    function cerrarMenu() {
+        document.getElementById("menuLateral").classList.remove("abierto");
+    }
+    function mostrarSubmenu(idSubmenu, idFlecha) {
+        const submenu = document.getElementById(idSubmenu);
+        const flecha = document.getElementById(idFlecha);
+        submenu.classList.toggle("mostrar");
+        flecha.textContent = submenu.classList.contains("mostrar") ? "▴" : "▾";
+    }
+</script>
+</body>
+</html>

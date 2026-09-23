@@ -1,0 +1,336 @@
+.seguimiento-page,
+.seguimiento-page * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.seguimiento-page .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.seguimiento-intro {
+    background: #041c32;
+    color: white;
+    padding: 30px 0;
+    border-bottom: 4px solid #c9a84c;
+}
+
+.seguimiento-intro h1 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.seguimiento-intro p {
+    opacity: 0.85;
+    font-size: 1.05rem;
+    margin-top: 6px;
+}
+
+.macro-timeline-section {
+    padding: 35px 0 10px;
+}
+
+.macro-timeline {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.macro-timeline::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e0e7ef;
+    z-index: 0;
+}
+
+.macro-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 8px;
+}
+
+.macro-step .numero {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background: #e0e7ef;
+    color: #7a8a9a;
+    border: 3px solid #e0e7ef;
+}
+
+.macro-step .etiqueta {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #7a8a9a;
+    font-weight: 500;
+    max-width: 120px;
+}
+
+.macro-step.completado .numero {
+    background: #c9a84c;
+    border-color: #c9a84c;
+    color: white;
+}
+
+.macro-step.completado .etiqueta {
+    color: #c9a84c;
+}
+
+.macro-step.activo .numero {
+    background: #041c32;
+    border-color: #c9a84c;
+    color: white;
+}
+
+.macro-step.activo .etiqueta {
+    color: #041c32;
+    font-weight: 700;
+}
+
+.macro-step.pendiente .numero,
+.macro-step.pendiente .etiqueta {
+    opacity: 0.6;
+}
+
+.etapa-detalle {
+    padding: 40px 0 60px;
+}
+
+.progress-container {
+    position: relative;
+    padding: 20px 0 10px;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    height: 4px;
+    background: #041c32;
+    width: 0%;
+    transition: width 0.4s ease;
+    z-index: 1;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e0e7ef;
+    z-index: -1;
+}
+
+.steps-indicators {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.step-indicator .step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e0e7ef;
+    color: #7a8a9a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    border: 3px solid #e0e7ef;
+}
+
+.step-indicator.active .step-number {
+    background: #041c32;
+    color: white;
+    border-color: #041c32;
+}
+
+.step-indicator.completed .step-number {
+    background: #c9a84c;
+    color: white;
+    border-color: #c9a84c;
+}
+
+.step-indicator .step-label {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    color: #7a8a9a;
+    text-align: center;
+}
+
+.step-indicator.active .step-label {
+    color: #041c32;
+    font-weight: 600;
+}
+
+.step-content {
+    margin-top: 30px;
+}
+
+.step-panel {
+    display: none;
+}
+
+.step-panel.active {
+    display: block;
+}
+
+.step-panel h2 {
+    color: #041c32;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    border-bottom: 3px solid #c9a84c;
+    padding-bottom: 10px;
+}
+
+.plazo-info {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.step-panel .pregunta {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f8f9fb;
+    border: 1px solid #e3e6eb;
+}
+
+.step-panel .pregunta label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.step-panel .pregunta label:first-of-type {
+    margin-top: 0;
+}
+
+.step-panel .pregunta input[type="text"],
+.step-panel .pregunta input[type="number"],
+.step-panel .pregunta input[type="date"],
+.step-panel .pregunta textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cfd4da;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    resize: vertical;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.radio-group label,
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 0;
+    cursor: pointer;
+    padding: 8px 12px;
+    background: white;
+    border: 1px solid #d6d9df;
+    border-radius: 8px;
+}
+
+.check-firma {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    margin-top: 16px;
+}
+
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: #041c32;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0a2a45;
+}
+
+.btn-secondary {
+    background: #e8edf2;
+    color: #041c32;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #d5dce4;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mensaje-final {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fb;
+    border-radius: 12px;
+}
+
+.mensaje-final h2 {
+    color: #041c32;
+    margin-bottom: 10px;
+}

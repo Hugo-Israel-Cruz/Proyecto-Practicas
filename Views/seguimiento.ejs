@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seguimiento del Proceso</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/tramite.css">
+    <link rel="stylesheet" href="/css/seguimiento.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><a href="/inicio">JusData</a></div>
+
+    <nav>
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/tramite">Trámites</a></li>
+            <li><a href="">Contacto</a></li>
+            <li><a href="/inicio">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="seguimiento-page">
+
+    <section class="seguimiento-intro">
+        <div class="container">
+            <h1>Seguimiento del Proceso</h1>
+            <p>Consulta el estado actual de tus trámites de divorcio</p>
+        </div>
+    </section>
+
+    <section class="seguimiento-resumen">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-folder-open"></i>
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Trámites totales</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">En proceso</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Completados</span>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-pause-circle"></i>
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Pendientes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seguimiento-lista">
+        <div class="container">
+            <h2>Mis trámites</h2>
+
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>No tienes trámites registrados todavía.</p>
+                <a href="/tramite" class="btn-detalle">Iniciar un trámite</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

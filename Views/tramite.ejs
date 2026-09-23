@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JUSDATA - Procedimiento de Divorcio</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/es.global.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><a href="/inicio">JUSDATA</a></div>
+    <nav>
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/tramite">Trámites</a></li>
+            <li><a href="">Contacto</a></li>
+            <li><a href="/inicio">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="layout-principal">
+    <div class="contenedor-form">
+
+        <h1>Procedimiento de Divorcio</h1>
+
+        <div class="macro-timeline">
+            <div class="macro-step activo" id="macro-0">
+                <span class="numero">0</span>
+                <span class="etiqueta">Tipo de Divorcio</span>
+            </div>
+            <div class="macro-step pendiente" id="macro-1">
+                <span class="numero">1</span>
+                <span class="etiqueta">Etapa Postulatoria</span>
+            </div>
+            <div class="macro-step pendiente" id="macro-2">
+                <span class="numero">2</span>
+                <span class="etiqueta">Audiencia Preliminar</span>
+            </div>
+            <div class="macro-step pendiente" id="macro-3">
+                <span class="numero">3</span>
+                <span class="etiqueta">Audiencia de Juicio</span>
+            </div>
+            <div class="macro-step pendiente" id="macro-4">
+                <span class="numero">4</span>
+                <span class="etiqueta">Insc. a Registro Civil</span>
+            </div>
+        </div>
+
+        <div class="sub-etapa oculto" id="subEtapaPostulatoria">
+            <h2 class="titulo-sub-etapa">Etapa 1: Etapa Postulatoria</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+                <div class="steps-indicators">
+                    <div class="step-indicator" id="indicador-1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Demanda</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Medidas</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">Admisión</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-4">
+                        <span class="step-number">4</span>
+                        <span class="step-label">Emplazamiento</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-5">
+                        <span class="step-number">5</span>
+                        <span class="step-label">Contestación</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form id="formularioDivorcio">
+
+            <div class="step-panel active" data-step="0">
+                <div class="pregunta">
+                    <span class="texto-pregunta">Datos del matrimonio</span>
+
+                    <label>¿Qué tipo de matrimonio tienes?</label>
+                    <select name="tipoMatrimonio" id="tipoMatrimonio">
+                        <option value="" disabled selected>Elige el tipo</option>
+                        <option value="civil">Matrimonio civil</option>
+                        <option value="union_hecho">Unión libre / Concubinato</option>
+                    </select>
+
+                    <label>¿Qué régimen de bienes eligieron al casarse?</label>
+                    <select name="regimenBienes" id="regimenBienes">
+                        <option value="" disabled selected>Selecciona el régimen</option>
+                        <option value="sociedad_conyugal">Sociedad conyugal</option>
+                        <option value="separacion_bienes">Separación de bienes</option>
+                    </select>
+
+                    <label>Código Postal (Estado de México)</label>
+                    <input type="text" name="codigoPostal" id="codigoPostal" placeholder="Ej. 50000" maxlength="5" pattern="[0-9]{5}">
+                    <div id="infoJuzgado" class="info-tipo oculto"></div>
+                </div>
+
+                <div class="pregunta">
+                    <span class="texto-pregunta">¿Qué tipo de divorcio deseas realizar?</span>
+
+                    <select name="tipoDivorcio" id="tipoDivorcio">
+                        <option value="" disabled selected>Selecciona el tipo</option>
+                        <option value="administrativo">A) Administrativo</option>
+                        <option value="notarial">B) Notarial</option>
+                        <option value="voluntario">C) Voluntario</option>
+                        <option value="incausado">D) Incausado</option>
+                    </select>
+
+                    <div id="infoTipoDivorcio" class="info-tipo oculto"></div>
+                </div>
+
+                <div class="pregunta oculto" id="grupoRequisitosAdmin">
+                    <span class="texto-pregunta">Requisitos del Divorcio Administrativo</span>
+                    <p class="plazo-info">Para este tipo de divorcio se requiere:</p>
+                    <div class="check-list">
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqAdmin1" value="comun_acuerdo">
+                            <span>1. Común acuerdo</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqAdmin2" value="sociedad_liquidada">
+                            <span>2. Liquidada la sociedad conyugal</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqAdmin3" value="sin_hijos">
+                            <span>3. Sin hijos tutelados</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqAdmin4" value="ante_oficial">
+                            <span>4. Ante el Oficial del Registro Civil</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta oculto" id="grupoRequisitosNotarial">
+                    <span class="texto-pregunta">Requisitos del Divorcio Notarial</span>
+                    <p class="plazo-info">Para este tipo de divorcio se requiere:</p>
+                    <div class="check-list">
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqNot1" value="ambas_partes">
+                            <span>1. Ambas partes</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqNot2" value="ante_notario">
+                            <span>2. Ante notario</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqNot3" value="sin_hijos">
+                            <span>3. Sin hijos tutelados</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta oculto" id="grupoRequisitosVoluntario">
+                    <span class="texto-pregunta">Requisitos del Divorcio Voluntario</span>
+                    <p class="plazo-info">Para este tipo de divorcio se requiere:</p>
+                    <div class="check-list">
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqVol1" value="ambas_partes">
+                            <span>1. Solicitan ambas partes</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqVol2" value="ante_juez">
+                            <span>2. Ante juez civil</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqVol3" value="convenio">
+                            <span>3. Convenio</span>
+                        </label>
+                    </div>
+
+                    <label>3.1. Domicilio(s)</label>
+                    <input type="text" name="convDomicilio" placeholder="Domicilio(s) acordado(s)">
+
+                    <label>3.2. Monto de alimentos y garantía</label>
+                    <input type="text" name="convAlimentos" placeholder="Monto y garantía">
+
+                    <label>3.3. División de guarda y custodia</label>
+                    <input type="text" name="convCustodia" placeholder="División de guarda y custodia">
+
+                    <label>3.4. Régimen de convivencia</label>
+                    <input type="text" name="convConvivencia" placeholder="Régimen de convivencia">
+
+                    <label>3.5. Administración y división de bienes</label>
+                    <input type="text" name="convBienes" placeholder="Administración y división de bienes">
+                </div>
+
+                <div class="pregunta oculto" id="grupoRequisitosIncausado">
+                    <span class="texto-pregunta">Requisitos del Divorcio Incausado</span>
+                    <p class="plazo-info">Para este tipo de divorcio se requiere:</p>
+                    <div class="check-list">
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqInc1" value="una_parte">
+                            <span>1. Solicita una parte (Demanda)</span>
+                        </label>
+                        <label class="check-item req-obligatorio">
+                            <input type="checkbox" name="reqInc2" value="ante_juez">
+                            <span>2. Ante juez civil</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta">
+                    <span class="texto-pregunta">¿Tuvieron hijos?</span>
+
+                    <div id="opcionesHijos">
+                        <label>
+                            <input type="radio" name="tieneHijos" value="si">
+                            Sí
+                        </label>
+                        <label>
+                            <input type="radio" name="tieneHijos" value="no">
+                            No
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta oculto" id="grupoCantidadHijos">
+                    <span class="texto-pregunta">¿Cuántos hijos tuvieron?</span>
+
+                    <select name="cantidadHijos" id="cantidadHijos">
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <div class="pregunta oculto" id="grupoEdadesHijos">
+                    <span class="texto-pregunta">¿Cuántos años tienen?</span>
+                    <div id="contenedorEdades"></div>
+                </div>
+
+                <div class="pregunta">
+                    <span class="texto-pregunta">¿Existen bienes adquiridos durante el matrimonio?</span>
+
+                    <div id="opcionesBienes">
+                        <label>
+                            <input type="radio" name="tieneBienes" value="si">
+                            Sí
+                        </label>
+                        <label>
+                            <input type="radio" name="tieneBienes" value="no">
+                            No
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pregunta oculto" id="grupoTipoBienes">
+                    <span class="texto-pregunta">¿Qué bienes adquirieron?</span>
+
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tipoBienes" value="casa"> Casa</label>
+                        <label><input type="checkbox" name="tipoBienes" value="carro"> Carro</label>
+                        <label><input type="checkbox" name="tipoBienes" value="alhajas"> Alhajas</label>
+                        <label><input type="checkbox" name="tipoBienes" value="otros" id="checkBienesOtros"> Otros</label>
+                    </div>
+
+                    <input type="text" name="bienesOtros" id="bienesOtros" class="oculto input-otros" placeholder="Especifica qué otros bienes">
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" disabled>Anterior</button>
+                    <button type="button" class="btn-primary" onclick="siguientePaso(0)">Siguiente</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+            <div class="step-panel" data-step="1">
+                <h2>1) Demanda</h2>
+
+                <div class="pregunta">
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="autoridadCompetente">
+                        <span>1. Juez civil</span>
+                    </label>
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="datosActor">
+                        <span>2. Nombre y domicilio</span>
+                    </label>
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="representacion">
+                        <span>3. Abogado</span>
+                    </label>
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="datosDemandado">
+                        <span>4. Nombre y domicilio</span>
+                    </label>
+
+                    <span class="texto-pregunta">5. Prestaciones</span>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="prestaciones" value="compensacion_economica"> Compensación económica</label>
+                        <label><input type="checkbox" name="prestaciones" value="custodia_hijos"> Custodia de los hijos</label>
+                        <label><input type="checkbox" name="prestaciones" value="pension_alimenticia_provisional"> Pensión alimenticia provisional</label>
+                        <label><input type="checkbox" name="prestaciones" value="pension_alimenticia_definitiva"> Pensión alimenticia definitiva</label>
+                        <label><input type="checkbox" name="prestaciones" value="otros" id="checkPrestacionesOtros"> Otros</label>
+                    </div>
+                    <input type="text" name="prestacionesOtros" id="prestacionesOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones">
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="hechos">
+                        <span>6. Breve narración</span>
+                    </label>
+
+                    <label class="check-item req-opcional">
+                        <input type="checkbox" name="fundamentos">
+                        <span>7. Artículos del código</span>
+                    </label>
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="valorDemandado">
+                        <span>8. Valor de lo demandado</span>
+                    </label>
+
+                    <span class="texto-pregunta">9. Desahogo de pruebas</span>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="pruebas" value="documental_privada"> Prueba documental privada</label>
+                        <label><input type="checkbox" name="pruebas" value="documental_publica"> Prueba documental pública</label>
+                        <label><input type="checkbox" name="pruebas" value="pericial"> Prueba pericial</label>
+                        <label><input type="checkbox" name="pruebas" value="testigos"> Declaración de testigos</label>
+                        <label><input type="checkbox" name="pruebas" value="parte_propia"> Declaración de parte propia</label>
+                        <label><input type="checkbox" name="pruebas" value="otros" id="checkPruebasOtros"> Otros</label>
+                    </div>
+                    <input type="text" name="pruebasOtros" id="pruebasOtros" class="oculto input-otros" placeholder="Especifica otras pruebas">
+
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="firmaFecha">
+                        <span>10. Firma y fecha</span>
+                    </label>
+
+                    <label>Fecha de presentación de la demanda Oficialía de Partes</label>
+                    <input type="date" name="fechaPresentacionDemanda" id="fechaPresentacionDemanda">
+
+                    <label class="check-item req-opcional">
+                        <input type="checkbox" name="vistaMP">
+                        <span>11. Vista a M.P.</span>
+                    </label>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" onclick="pasoAnterior(1)">Anterior</button>
+                    <button type="button" class="btn-primary" onclick="siguientePaso(1)">Siguiente</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+            <div class="step-panel" data-step="2">
+                <h2>2) Medidas provisionales</h2>
+                <div class="plazo-contador">
+                    <span class="plazo-label">Plazo:</span>
+                    <span class="plazo-valor">se solicitan con la demanda</span>
+                </div>
+
+                <div class="pregunta">
+                    <label>Selecciona las que apliquen</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="medidas" value="separacion"> A) Separación de cónyuges</label>
+                        <label><input type="checkbox" name="medidas" value="alimentos"> B) Monto de alimentos</label>
+                        <label><input type="checkbox" name="medidas" value="custodia"> C) Acuerdo de guarda y custodia pref a la mujer</label>
+                        <label><input type="checkbox" name="medidas" value="embarazo"> D) Medidas para mujer embarazada</label>
+                        <label><input type="checkbox" name="medidas" value="resguardo_personal"> E) Lo necesario para resguardo personal</label>
+                        <label><input type="checkbox" name="medidas" value="resguardo_bienes"> F) Lo necesario para resguardo de bienes</label>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" onclick="pasoAnterior(2)">Anterior</button>
+                    <button type="button" class="btn-primary" onclick="siguientePaso(2)">Siguiente</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+            <div class="step-panel" data-step="3">
+                <h2>3) Admisión de la demanda</h2>
+                <div class="plazo-contador">
+                    <span class="plazo-label">Plazo:</span>
+                    <span class="plazo-valor">3 días hábiles</span>
+                    <div class="plazo-conteo" data-dias="3">
+                        <span class="dias">3</span>
+                        <span class="unidad">días hábiles restantes</span>
+                    </div>
+                    <div class="reajustar-container">
+                        <label class="check-reajustar">
+                            <input type="checkbox" class="check-reajustar-input" data-paso="3">
+                            Reajustar
+                        </label>
+                        <div class="grupo-motivo oculto">
+                            <input type="text" class="input-motivo" placeholder="Motivo (máx. 15 palabras)" data-max-palabras="15">
+                            <div class="grupo-calendario oculto">
+                                <input type="date" class="input-reajuste">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta">
+                    <label>¿Cuál fue la resolución del juez?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="resolucionAdmision" value="admitida"> Admitió la demanda</label>
+                        <label><input type="radio" name="resolucionAdmision" value="prevencion"> Previno para corregir</label>
+                    </div>
+
+                    <div id="grupoAdmisionMedidas" class="oculto">
+                        <label class="check-item req-opcional">
+                            <input type="checkbox" name="medidasAdmitidas">
+                            <span>¿Se admitieron las medidas provisionales?</span>
+                        </label>
+                    </div>
+
+                    <div id="grupoTipoPrevencion" class="oculto">
+                        <span class="texto-pregunta">Tipo de prevención</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="tipoPrevencion" value="forma"> Forma</label>
+                            <label><input type="checkbox" name="tipoPrevencion" value="fondo"> Fondo</label>
+                        </div>
+
+                        <label>¿Qué se debe corregir?</label>
+                        <textarea name="correccionPrevencion" id="correccionPrevencion" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" onclick="pasoAnterior(3)">Anterior</button>
+                    <button type="button" class="btn-primary" onclick="siguientePaso(3)">Siguiente</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+            <div class="step-panel" data-step="4">
+                <h2>4) Emplazamiento</h2>
+                <div class="plazo-contador">
+                    <span class="plazo-label">Plazo:</span>
+                    <span class="plazo-valor">se realiza después de la admisión</span>
+                </div>
+
+                <div class="pregunta">
+                    <label>1. ¿Cómo se realizó el emplazamiento?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="tipoEmplazamiento" value="persona"> En persona al demandado</label>
+                        <label><input type="radio" name="tipoEmplazamiento" value="tercero"> A la persona que atiende, anotando quién es</label>
+                        <label><input type="radio" name="tipoEmplazamiento" value="citatorio"> Citatorio para el día siguiente</label>
+                        <label><input type="radio" name="tipoEmplazamiento" value="adhesion"> Por adhesión si no hay nadie (letrero pegado en la puerta)</label>
+                    </div>
+                </div>
+
+                <div class="pregunta">
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="domicilioDemandado">
+                        <span>2. Domicilio del demandado</span>
+                    </label>
+                </div>
+
+                <div class="pregunta">
+                    <label class="check-item req-obligatorio">
+                        <input type="checkbox" name="copiasEntregadas">
+                        <span>3. Copias de la demanda</span>
+                    </label>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" onclick="pasoAnterior(4)">Anterior</button>
+                    <button type="button" class="btn-primary" onclick="siguientePaso(4)">Siguiente</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+            <div class="step-panel" data-step="5">
+                <h2>5) Contestación o Reconvención</h2>
+                <div class="plazo-contador">
+                    <span class="plazo-label">Plazo:</span>
+                    <span class="plazo-valor">9 días hábiles para contestar, 3 días para contestar la contestación</span>
+                    <div class="plazo-conteo" data-dias="9">
+                        <span class="dias">9</span>
+                        <span class="unidad">días hábiles restantes</span>
+                    </div>
+                    <div class="reajustar-container">
+                        <label class="check-reajustar">
+                            <input type="checkbox" class="check-reajustar-input" data-paso="5">
+                            Reajustar
+                        </label>
+                        <div class="grupo-motivo oculto">
+                            <input type="text" class="input-motivo" placeholder="Motivo (máx. 15 palabras)" data-max-palabras="15">
+                            <div class="grupo-calendario oculto">
+                                <input type="date" class="input-reajuste">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pregunta">
+                    <label>¿El demandado contestó la demanda?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="contesto" value="si"> Sí</label>
+                        <label><input type="radio" name="contesto" value="no"> No</label>
+                    </div>
+
+                    <div id="grupoReconvencion">
+                        <label>¿El demandado presentó reconvención?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="reconvencion" value="si"> Sí</label>
+                            <label><input type="radio" name="reconvencion" value="no"> No</label>
+                        </div>
+
+                        <div id="grupoPrestacionesReconvencion" class="oculto">
+                            <span class="texto-pregunta">Prestaciones que pide el demandado en la reconvención</span>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="prestacionesReconvencion" value="compensacion_economica"> Compensación económica</label>
+                                <label><input type="checkbox" name="prestacionesReconvencion" value="custodia_hijos"> Custodia de los hijos</label>
+                                <label><input type="checkbox" name="prestacionesReconvencion" value="pension_alimenticia_provisional"> Pensión alimenticia provisional</label>
+                                <label><input type="checkbox" name="prestacionesReconvencion" value="pension_alimenticia_definitiva"> Pensión alimenticia definitiva</label>
+                                <label><input type="checkbox" name="prestacionesReconvencion" value="otros" id="checkPrestacionesReconvencionOtros"> Otros</label>
+                            </div>
+                            <input type="text" name="prestacionesReconvencionOtros" id="prestacionesReconvencionOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button type="button" class="btn-secondary" onclick="pasoAnterior(5)">Anterior</button>
+                    <button type="button" class="btn-primary" onclick="iniciarEtapa2()">Finalizar Etapa 1</button>
+                    <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="sub-etapa oculto" id="etapaPreliminar">
+            <h2 class="titulo-sub-etapa">Etapa 2: Audiencia Preliminar</h2>
+            <div class="plazo-contador">
+                <span class="plazo-label">Plazo:</span>
+                <span class="plazo-valor">15 días hábiles después de las contestaciones</span>
+                <div class="plazo-conteo" data-dias="15">
+                    <span class="dias">15</span>
+                    <span class="unidad">días hábiles restantes</span>
+                </div>
+                <div class="reajustar-container">
+                    <label class="check-reajustar">
+                        <input type="checkbox" class="check-reajustar-input" data-paso="etapa2">
+                        Reajustar
+                    </label>
+                    <div class="grupo-motivo oculto">
+                        <input type="text" class="input-motivo" placeholder="Motivo (máx. 15 palabras)" data-max-palabras="15">
+                        <div class="grupo-calendario oculto">
+                            <input type="date" class="input-reajuste">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBarEtapa2"></div>
+                <div class="steps-indicators">
+                    <div class="step-indicator" id="indicador-e2-1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Junta Anticipada</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-e2-2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Audiencia ante Autoridad</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="formularioEtapa2">
+
+                <div class="step-panel active" data-step-etapa2="0">
+                    <h2>1) Junta Anticipada</h2>
+
+                    <div class="pregunta">
+                        <label>1. Intercambio de pruebas</label>
+                        <textarea name="intercambioPruebas" rows="3"></textarea>
+
+                        <label>2. Propuesta de convenio</label>
+                        <textarea name="propuestaConvenio" rows="3"></textarea>
+
+                        <label>3. Acuerdos sobre hechos</label>
+                        <textarea name="acuerdosHechos" rows="3"></textarea>
+
+                        <label>4. Acuerdos sobre pruebas</label>
+                        <textarea name="acuerdosPruebas" rows="3"></textarea>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa2(0)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="siguientePasoEtapa2(0)">Siguiente</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+                <div class="step-panel" data-step-etapa2="1">
+                    <h2>2) Audiencia ante Autoridad</h2>
+
+                    <div class="pregunta">
+                        <span class="texto-pregunta">1. Prestaciones admitidas y sus contestaciones</span>
+
+                        <div class="grupo-prestaciones">
+                            <label class="subtitulo-prestaciones">De la Demanda</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="prestacionesDemandaEtapa2" value="compensacion_economica" disabled> Compensación económica</label>
+                                <label><input type="checkbox" name="prestacionesDemandaEtapa2" value="custodia_hijos" disabled> Custodia de los hijos</label>
+                                <label><input type="checkbox" name="prestacionesDemandaEtapa2" value="pension_alimenticia_provisional" disabled> Pensión alimenticia provisional</label>
+                                <label><input type="checkbox" name="prestacionesDemandaEtapa2" value="pension_alimenticia_definitiva" disabled> Pensión alimenticia definitiva</label>
+                            </div>
+                        </div>
+
+                        <div class="grupo-prestaciones">
+                            <label class="subtitulo-prestaciones">De la Contestación</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="prestacionesContestacionEtapa2" value="compensacion_economica" disabled> Compensación económica</label>
+                                <label><input type="checkbox" name="prestacionesContestacionEtapa2" value="custodia_hijos" disabled> Custodia de los hijos</label>
+                                <label><input type="checkbox" name="prestacionesContestacionEtapa2" value="pension_alimenticia_provisional" disabled> Pensión alimenticia provisional</label>
+                                <label><input type="checkbox" name="prestacionesContestacionEtapa2" value="pension_alimenticia_definitiva" disabled> Pensión alimenticia definitiva</label>
+                            </div>
+                        </div>
+
+                        <label>2. Definición del procedimiento</label>
+                        <textarea name="definicionProcedimiento" rows="3"></textarea>
+
+                        <label>3. Posibilidad de conciliar</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="huboConciliacion" value="si"> Sí</label>
+                            <label><input type="radio" name="huboConciliacion" value="no"> No</label>
+                        </div>
+
+                        <div id="grupoAcuerdosConciliacion" class="oculto">
+                            <span class="texto-pregunta">Requisitos del Divorcio Voluntario</span>
+                            <div class="check-list">
+                                <label class="check-item">
+                                    <input type="checkbox" name="reqConv1" value="domicilio">
+                                    <span>1. Domicilio(s)</span>
+                                </label>
+                                <label class="check-item">
+                                    <input type="checkbox" name="reqConv2" value="alimentos">
+                                    <span>2. Monto de alimentos y garantía</span>
+                                </label>
+                                <label class="check-item">
+                                    <input type="checkbox" name="reqConv3" value="custodia">
+                                    <span>3. División de guarda y custodia</span>
+                                </label>
+                                <label class="check-item">
+                                    <input type="checkbox" name="reqConv4" value="convivencia">
+                                    <span>4. Régimen de convivencia</span>
+                                </label>
+                                <label class="check-item">
+                                    <input type="checkbox" name="reqConv5" value="bienes">
+                                    <span>5. Administración y división de bienes</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <label>4. Revisar lo que se ha acordado</label>
+                        <textarea name="revisionAcuerdos" rows="3"></textarea>
+
+                        <label>5. Fecha para audiencia de juicio</label>
+                        <input type="date" name="fechaAudienciaJuicio">
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa2(1)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="finalizarEtapa2()">Finalizar Etapa 2</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="sub-etapa oculto" id="etapaJuicio">
+            <h2 class="titulo-sub-etapa">Etapa 3: Audiencia de Juicio</h2>
+            <div class="plazo-contador">
+                <span class="plazo-label">Plazo:</span>
+                <span class="plazo-valor">40 días hábiles desde aud. preliminar</span>
+                <div class="plazo-conteo" data-dias="40">
+                    <span class="dias">40</span>
+                    <span class="unidad">días hábiles restantes</span>
+                </div>
+                <div class="reajustar-container">
+                    <label class="check-reajustar">
+                        <input type="checkbox" class="check-reajustar-input" data-paso="etapa3">
+                        Reajustar
+                    </label>
+                    <div class="grupo-motivo oculto">
+                        <input type="text" class="input-motivo" placeholder="Motivo (máx. 15 palabras)" data-max-palabras="15">
+                        <div class="grupo-calendario oculto">
+                            <input type="date" class="input-reajuste">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBarEtapa3"></div>
+                <div class="steps-indicators">
+                    <div class="step-indicator" id="indicador-e3-1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Alegatos de Apertura</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-e3-2">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Desahogo de Pruebas</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-e3-3">
+                        <span class="step-number">3</span>
+                        <span class="step-label">Alegatos de Cierre</span>
+                    </div>
+                    <div class="step-indicator" id="indicador-e3-4">
+                        <span class="step-number">4</span>
+                        <span class="step-label">Sentencia</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="formularioEtapa3">
+
+                <div class="step-panel active" data-step-etapa3="0">
+                    <h2>1) Alegatos de Apertura</h2>
+
+                    <div class="pregunta">
+                        <label>Descripción de los alegatos de apertura</label>
+                        <textarea name="alegatosApertura" rows="4"></textarea>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa3(0)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="siguientePasoEtapa3(0)">Siguiente</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+                <div class="step-panel" data-step-etapa3="1">
+                    <h2>2) Desahogo de Pruebas</h2>
+
+                    <div class="pregunta">
+                        <label>Descripción del desahogo de pruebas</label>
+                        <textarea name="desahogoPruebas" rows="4"></textarea>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa3(1)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="siguientePasoEtapa3(1)">Siguiente</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+                <div class="step-panel" data-step-etapa3="2">
+                    <h2>3) Alegatos de Cierre</h2>
+
+                    <div class="pregunta">
+                        <label>Descripción de los alegatos de cierre</label>
+                        <textarea name="alegatosCierre" rows="4"></textarea>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa3(2)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="siguientePasoEtapa3(2)">Siguiente</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+                <div class="step-panel" data-step-etapa3="3">
+                    <h2>4) Sentencia</h2>
+
+                    <div class="pregunta">
+                        <span class="texto-pregunta">Sentencia</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="sentencia" value="favor"> A favor</label>
+                            <label><input type="checkbox" name="sentencia" value="contra"> En contra</label>
+                        </div>
+
+                        <label>4.1) Apelación a puntos resolutivos</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="huboApelacion" value="si"> Sí</label>
+                            <label><input type="radio" name="huboApelacion" value="no"> No</label>
+                        </div>
+
+                        <div id="grupoDetalleApelacion" class="oculto">
+                            <label>Detalle de la apelación a puntos resolutivos</label>
+                            <textarea name="detalleApelacion" id="detalleApelacion" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa3(3)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="finalizarEtapa3()">Finalizar Etapa 3</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="sub-etapa oculto" id="etapaRegistroCivil">
+            <h2 class="titulo-sub-etapa">Etapa 4: Inscripción a Registro Civil</h2>
+            <p class="plazo-info" style="text-align:center; margin-bottom:20px;">
+                El juez o el notario enviarán copia de la sentencia al oficial del registro civil donde se llevó a cabo el matrimonio para hacer la inscripción del Divorcio
+            </p>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBarEtapa4" style="width:0%"></div>
+                <div class="steps-indicators">
+                    <div class="step-indicator" id="indicador-e4-1">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Inscripción</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="formularioEtapa4">
+
+                <div class="step-panel active" data-step-etapa4="0">
+                    <h2>Inscripción del Divorcio</h2>
+
+                    <div class="pregunta">
+                        <span class="texto-pregunta">Inscripción del Divorcio</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="inscripcion" value="realizada"> Inscripción realizada</label>
+                            <label><input type="checkbox" name="inscripcion" value="pendiente"> Inscripción pendiente</label>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-secondary" onclick="pasoAnteriorEtapa4(0)">Anterior</button>
+                        <button type="button" class="btn-primary" onclick="finalizarEtapa4()">Finalizar trámite</button>
+                        <button type="button" class="btn-imprimir-top" onclick="window.print()">Imprimir</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="mensaje-final oculto" id="mensajeFinal">
+            <h2>El Proceso de demanda ha terminado</h2>
+        </div>
+
+    </div>
+
+    <aside class="sidebar-calendario">
+        <h3>Calendario de plazos</h3>
+        <div id="calendario"></div>
+        <div id="detalleDia" class="detalle-dia oculto"></div>
+    </aside>
+
+</div>
+
+<script src="/js/tramite.js"></script>
+</body>
+</html>

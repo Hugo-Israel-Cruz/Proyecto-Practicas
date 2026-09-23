@@ -1,0 +1,621 @@
+.tramite-header, .seguimiento-header {
+    background: #041c32;
+    padding: 15px 0;
+    border-bottom: 3px solid #c9a84c;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.logo i {
+    color: #c9a84c;
+    margin-right: 10px;
+}
+
+nav a {
+    color: #a0b8cc;
+    text-decoration: none;
+    margin-left: 25px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+nav a.active {
+    background: #c9a84c;
+    color: #041c32;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.tramite-intro {
+    background: #041c32;
+    color: white;
+    padding: 30px 0;
+    border-bottom: 4px solid #c9a84c;
+}
+
+.tramite-intro h1 {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.tramite-intro p {
+    opacity: 0.85;
+    margin-top: 6px;
+}
+
+.tramite-progreso {
+    padding: 30px 0 20px;
+    background: #f5f7fa;
+}
+
+.progress-container {
+    position: relative;
+    padding: 20px 0 10px;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    height: 4px;
+    background: #c9a84c;
+    transition: width 0.5s ease;
+    z-index: 1;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #e0e7ef;
+    z-index: -1;
+}
+
+.steps-indicators {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0e7ef;
+    color: #7a8a9a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: 0.3s;
+    border: 3px solid #e0e7ef;
+}
+
+.step-indicator.completed .step-number {
+    background: #c9a84c;
+    color: white;
+    border-color: #c9a84c;
+}
+
+.step-label {
+    font-size: 0.75rem;
+    margin-top: 6px;
+    color: #7a8a9a;
+    text-align: center;
+    font-weight: 500;
+}
+
+.tramite-content {
+    padding: 40px 0;
+}
+
+.step-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.step-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.step-panel h2 {
+    color: #041c32;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    border-bottom: 3px solid #c9a84c;
+    padding-bottom: 12px;
+}
+
+.step-panel h2 i {
+    color: #c9a84c;
+    margin-right: 10px;
+}
+
+.step-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+    .step-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 4px solid #c9a84c;
+}
+
+.info-card h3 {
+    color: #041c32;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+.info-card h3 i {
+    color: #c9a84c;
+    margin-right: 8px;
+}
+
+.info-card p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.info-card ul {
+    padding-left: 25px;
+    margin: 10px 0;
+}
+
+.info-card ul li {
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.radio-group label:hover {
+    background: #eef2f7;
+}
+
+.radio-group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #041c32;
+}
+
+.resumen-final {
+    border-left-color: #041c32;
+    background: #f0f4fa;
+}
+
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background: #041c32;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background: #0a2a45;
+    transform: scale(1.02);
+}
+
+.btn-secondary {
+    background: #e8edf2;
+    color: #041c32;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #d5dce4;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.seguimiento-resumen {
+    padding: 30px 0;
+    background: #f5f7fa;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat-card i {
+    font-size: 2rem;
+    color: #c9a84c;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #041c32;
+    margin: 5px 0;
+}
+
+.stat-label {
+    color: #7a8a9a;
+    font-size: 0.9rem;
+}
+
+.seguimiento-lista {
+    padding: 40px 0;
+}
+
+.seguimiento-lista h2 {
+    color: #041c32;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #c9a84c;
+    padding-bottom: 12px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #c9a84c;
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    color: #7a8a9a;
+    margin-bottom: 20px;
+}
+
+.casos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+@media (max-width: 768px) {
+    .casos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.caso-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-left: 4px solid #c9a84c;
+}
+
+.caso-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.caso-header h3 {
+    color: #041c32;
+    font-size: 1.1rem;
+}
+
+.caso-estado {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.estado-en-proceso {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.estado-pendiente {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.estado-completado {
+    background: #d4edda;
+    color: #155724;
+}
+
+.caso-body p {
+    margin: 6px 0;
+    color: #1e2f3e;
+}
+
+.caso-progreso {
+    margin-top: 15px;
+}
+
+.caso-progreso label {
+    font-size: 0.9rem;
+    color: #7a8a9a;
+}
+
+.progreso-bar {
+    background: #e0e7ef;
+    border-radius: 10px;
+    height: 8px;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.progreso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c9a84c, #041c32);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progreso-texto {
+    font-size: 0.8rem;
+    color: #7a8a9a;
+}
+
+.caso-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.caso-actions select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #d5dce4;
+    background: white;
+    flex: 1;
+}
+
+.btn-detalle {
+    background: #041c32;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-detalle:hover {
+    background: #0a2a45;
+}
+
+#etapaPreliminar,
+#etapaJuicio,
+#etapaRegistroCivil {
+    margin-top: 30px;
+}
+
+#etapaPreliminar .titulo-sub-etapa,
+#etapaJuicio .titulo-sub-etapa,
+#etapaRegistroCivil .titulo-sub-etapa {
+    text-align: center;
+    color: #052554;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+#etapaPreliminar .step-panel h2,
+#etapaJuicio .step-panel h2,
+#etapaRegistroCivil .step-panel h2 {
+    color: #041c32;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #c9a84c;
+    padding-bottom: 10px;
+}
+
+#etapaPreliminar .step-panel textarea,
+#etapaJuicio .step-panel textarea,
+#etapaRegistroCivil .step-panel textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cfd4da;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    resize: vertical;
+    margin-bottom: 10px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+#etapaPreliminar .step-panel textarea:focus,
+#etapaJuicio .step-panel textarea:focus,
+#etapaRegistroCivil .step-panel textarea:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+#etapaPreliminar .step-panel input[type="date"],
+#etapaPreliminar .step-panel input[type="text"],
+#etapaJuicio .step-panel input[type="date"],
+#etapaJuicio .step-panel input[type="text"],
+#etapaRegistroCivil .step-panel input[type="date"],
+#etapaRegistroCivil .step-panel input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #cfd4da;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+#etapaPreliminar .step-panel input[type="date"]:focus,
+#etapaPreliminar .step-panel input[type="text"]:focus,
+#etapaJuicio .step-panel input[type="date"]:focus,
+#etapaJuicio .step-panel input[type="text"]:focus,
+#etapaRegistroCivil .step-panel input[type="date"]:focus,
+#etapaRegistroCivil .step-panel input[type="text"]:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+#etapaPreliminar .progress-bar,
+#etapaJuicio .progress-bar,
+#etapaRegistroCivil .progress-bar {
+    background: #c9a84c;
+}
+
+#etapaPreliminar .step-indicator.active .step-number,
+#etapaJuicio .step-indicator.active .step-number,
+#etapaRegistroCivil .step-indicator.active .step-number {
+    background: #041c32;
+    color: white;
+    border-color: #041c32;
+}
+
+#etapaPreliminar .step-indicator.completed .step-number,
+#etapaJuicio .step-indicator.completed .step-number,
+#etapaRegistroCivil .step-indicator.completed .step-number {
+    background: #c9a84c;
+    color: white;
+    border-color: #c9a84c;
+}
+
+#etapaPreliminar .step-indicator.active .step-label,
+#etapaJuicio .step-indicator.active .step-label,
+#etapaRegistroCivil .step-indicator.active .step-label {
+    color: #041c32;
+    font-weight: 600;
+}
+
+.check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #d6d9df;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.check-list .check-item {
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px solid #e3e6eb;
+    border-radius: 0;
+    border-left: none;
+}
+
+.check-list .check-item:last-child {
+    border-bottom: none;
+}
+
+.check-list .check-item.req-obligatorio {
+    border-left: 4px solid #c0392b;
+}
+
+.check-list .check-item.req-opcional {
+    border-left: 4px solid #927009;
+}
