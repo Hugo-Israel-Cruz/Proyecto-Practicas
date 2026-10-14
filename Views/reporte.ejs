@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JUSDATA - Reporte del trámite <%= tramite.folio %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .reporte { max-width: 900px; margin: 30px auto; padding: 0 20px 50px; font-family: Arial, Helvetica, sans-serif; color: #2c3e50; }
+        .reporte-encabezado { text-align: center; margin-bottom: 25px; }
+        .reporte-encabezado h1 { color: rgb(74, 47, 11); margin: 0 0 6px; }
+        .reporte-encabezado p { margin: 0; color: #555; }
+        .estado-tag { display: inline-block; margin-top: 10px; padding: 5px 16px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; color: white; background: #927009; }
+        .estado-tag.completado { background: #27ae60; }
+        .rep-sec { background: white; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); margin-bottom: 18px; overflow: hidden; page-break-inside: avoid; }
+        .rep-sec h2 { margin: 0; padding: 12px 20px; background: rgb(74, 47, 11); color: white; font-size: 1.05rem; }
+        .rep-sec table { width: 100%; border-collapse: collapse; }
+        .rep-sec th, .rep-sec td { padding: 10px 20px; text-align: left; vertical-align: top; border-bottom: 1px solid #eee; font-size: 0.93rem; }
+        .rep-sec th { width: 38%; color: rgb(74, 47, 11); background: #fdf6e3; font-weight: 700; }
+        .rep-sec td { white-space: pre-wrap; }
+        .rep-acciones { display: flex; gap: 12px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
+        .rep-acciones a, .rep-acciones button { padding: 11px 24px; border-radius: 8px; border: none; background: #927009; color: white; font-weight: 600; font-size: 0.95rem; cursor: pointer; text-decoration: none; }
+        .rep-acciones a:hover, .rep-acciones button:hover { background: #ab880c; }
+        @media print {
+            header, .rep-acciones { display: none !important; }
+            .rep-sec { box-shadow: none; border: 1px solid #ccc; }
+            .rep-sec h2 { background: #eee !important; color: #000 !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo"><a href="/inicio">JUSDATA</a></div>
+    <nav>
+        <ul>
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/seguimiento">Trámites</a></li>
+            <li><a href="">Contacto</a></li>
+            <% if (usuario) { %>
+                <li><span style="color: #ffd700; font-weight: 600;">Hola, <%= usuario.nombre %></span></li>
+                <li><a href="/cerrar-sesion">Cerrar sesión</a></li>
+            <% } else { %>
+                <li><a href="/login">Iniciar sesión</a></li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+
+<%
+    const R = x => x || {};
+    const e0 = R(d.etapa0), dem = R(d.etapa1Demanda), med = R(d.etapa1Medidas), adm = R(d.etapa1Admision),
+          emp = R(d.etapa1Emplazamiento), con = R(d.etapa1Contestacion), jun = R(d.etapa2Junta),
+          aud = R(d.etapa2Audiencia), ape = R(d.etapa3AlegatosApertura), des = R(d.etapa3Desahogo),
+          cie = R(d.etapa3AlegatosCierre), sen = R(d.etapa3Sentencia), ins = R(d.etapa4Inscripcion);
+
+    const L = (mapa, v) => { const r = lista(v).map(x => et(mapa, x)).join(', '); return r || '—'; };
+    const ck = v => (v ? '✔ Sí' : '✘ No');
+    const T = v => (v === null || v === undefined || v === '' ? '—' : v);
+    const conv = R(e0.convenio);
+
+    const medidasActivas = ['separacion', 'alimentos', 'custodia', 'embarazo', 'resguardo_personal', 'resguardo_bienes']
+        .filter(k => med[k]).map(k => et('medidas', k)).join(', ') || '—';
+
+    const prestOtros = (lista(dem.prestaciones_seleccionadas).includes('otros') && dem.prestaciones_otros)
+        ? ' (' + dem.prestaciones_otros + ')' : '';
+    const pruebasOtros = (lista(dem.pruebas_seleccionadas).includes('otros') && dem.pruebas_otros)
+        ? ' (' + dem.pruebas_otros + ')' : '';
+    const bienesOtros = (lista(e0.bienes_seleccionados).includes('otros') && e0.bienes_otros)
+        ? ' (' + e0.bienes_otros + ')' : '';
+
+    const secciones = [
+        { titulo: 'Datos generales', filas: [
+            ['Folio', tramite.folio],
+            ['Tipo de divorcio', et('tipoDivorcio', tramite.tipo_divorcio)],
+            ['Estado', tramite.estado === 'completado' ? 'Completado' : 'En proceso'],
+            ['Paso actual', etapaTexto],
+            ['Fecha de inicio', fecha(tramite.fecha_inicio)],
+            ['Fecha de presentación de la demanda', fecha(tramite.fecha_presentacion)],
+            ['Última actualización', fecha(tramite.fecha_ultima_actualizacion)]
+        ]},
+        { titulo: 'Etapa 0 · Datos del matrimonio', filas: [
+            ['Tipo de matrimonio', e0.tipo_matrimonio ? et('tipoMatrimonio', e0.tipo_matrimonio) : '—'],
+            ['Régimen de bienes', e0.regimen_bienes ? et('regimen', e0.regimen_bienes) : '—'],
+            ['Código postal', T(e0.codigo_postal)],
+            ['Requisitos del tipo de divorcio', L('requisitos', e0.requisitos_seleccionados)],
+            ['¿Tuvieron hijos?', sn(e0.tiene_hijos)],
+            ['Cantidad de hijos', T(e0.cantidad_hijos)],
+            ['Edades de los hijos', lista(e0.edades_hijos).map((x, i) => 'Hijo ' + (i + 1) + ': ' + (x === '18_mas' ? '18 o más' : (x === '' ? 'sin dato' : x + ' años'))).join(' | ') || '—'],
+            ['¿Bienes durante el matrimonio?', sn(e0.tiene_bienes)],
+            ['Bienes adquiridos', L('bienes', e0.bienes_seleccionados) + bienesOtros]
+        ].concat(tramite.tipo_divorcio === 'voluntario' ? [
+            ['Convenio: domicilio(s)', T(conv.domicilio)],
+            ['Convenio: alimentos y garantía', T(conv.alimentos)],
+            ['Convenio: guarda y custodia', T(conv.custodia)],
+            ['Convenio: régimen de convivencia', T(conv.convivencia)],
+            ['Convenio: administración y división de bienes', T(conv.bienes)]
+        ] : [])},
+        { titulo: 'Etapa 1 · Demanda', filas: [
+            ['Juez civil (autoridad competente)', ck(dem.autoridad_competente)],
+            ['Nombre y domicilio del actor', ck(dem.datos_actor)],
+            ['Abogado / representación', ck(dem.representacion)],
+            ['Nombre y domicilio del demandado', ck(dem.datos_demandado)],
+            ['Prestaciones', L('prestaciones', dem.prestaciones_seleccionadas) + prestOtros],
+            ['Breve narración de hechos', ck(dem.hechos)],
+            ['Artículos del código', ck(dem.fundamentos)],
+            ['Valor de lo demandado', ck(dem.valor_demandado)],
+            ['Pruebas', L('pruebas', dem.pruebas_seleccionadas) + pruebasOtros],
+            ['Firma y fecha', ck(dem.firma_fecha)],
+            ['Fecha de presentación (Oficialía de Partes)', fecha(dem.fecha_presentacion_demanda)],
+            ['Vista al M.P.', ck(dem.vista_mp)]
+        ]},
+        { titulo: 'Etapa 1 · Medidas provisionales', filas: [
+            ['Medidas solicitadas', medidasActivas]
+        ]},
+        { titulo: 'Etapa 1 · Admisión de la demanda', filas: [
+            ['Resolución del juez', adm.resolucion ? et('resolucion', adm.resolucion) : '—'],
+            ['¿Se admitieron las medidas provisionales?', adm.resolucion === 'admitida' ? ck(adm.medidas_admitidas) : '—'],
+            ['Tipo de prevención', L('prevencion', adm.tipo_prevencion)],
+            ['Qué se debe corregir', T(adm.correccion_prevencion)]
+        ]},
+        { titulo: 'Etapa 1 · Emplazamiento', filas: [
+            ['Forma de emplazamiento', emp.tipo_emplazamiento ? et('emplazamiento', emp.tipo_emplazamiento) : '—'],
+            ['Domicilio del demandado', ck(emp.domicilio_demandado)],
+            ['Copias de la demanda entregadas', ck(emp.copias_entregadas)]
+        ]},
+        { titulo: 'Etapa 1 · Contestación o reconvención', filas: [
+            ['¿El demandado contestó?', sn(con.contesto)],
+            ['¿Presentó reconvención?', sn(con.reconvencion)],
+            ['Prestaciones de la reconvención', L('prestaciones', con.prestaciones_reconvencion) + (con.prestaciones_reconvencion_otros ? ' (' + con.prestaciones_reconvencion_otros + ')' : '')]
+        ]},
+        { titulo: 'Etapa 2 · Junta anticipada', filas: [
+            ['Intercambio de pruebas', T(jun.intercambio_pruebas)],
+            ['Propuesta de convenio', T(jun.propuesta_convenio)],
+            ['Acuerdos sobre hechos', T(jun.acuerdos_hechos)],
+            ['Acuerdos sobre pruebas', T(jun.acuerdos_pruebas)]
+        ]},
+        { titulo: 'Etapa 2 · Audiencia ante autoridad', filas: [
+            ['Prestaciones de la demanda', L('prestaciones', aud.prestaciones_admitidas)],
+            ['Prestaciones de la contestación', L('prestaciones', aud.prestaciones_contestacion)],
+            ['Definición del procedimiento', T(aud.definicion_procedimiento)],
+            ['¿Hubo conciliación?', sn(aud.hubo_conciliacion)],
+            ['Puntos acordados en el convenio', L('convenio', aud.requisitos_convenio)],
+            ['Revisión de lo acordado', T(aud.revision_acuerdos)],
+            ['Fecha de la audiencia de juicio', fecha(aud.fecha_audiencia_juicio)]
+        ]},
+        { titulo: 'Etapa 3 · Audiencia de juicio', filas: [
+            ['Alegatos de apertura', T(ape.descripcion)],
+            ['Desahogo de pruebas', T(des.descripcion)],
+            ['Alegatos de cierre', T(cie.descripcion)],
+            ['Sentencia', sen.sentencia ? et('sentencia', sen.sentencia) : '—'],
+            ['¿Hubo apelación?', sn(sen.hubo_apelacion)],
+            ['Detalle de la apelación', T(sen.detalle_apelacion)]
+        ]},
+        { titulo: 'Etapa 4 · Inscripción en Registro Civil', filas: [
+            ['Estado de la inscripción', ins.inscripcion ? et('inscripcion', ins.inscripcion) : '—']
+        ]}
+    ];
+%>
+
+<div class="reporte">
+
+    <div class="reporte-encabezado">
+        <h1>Reporte del trámite de divorcio</h1>
+        <p>Folio <strong><%= tramite.folio %></strong> · Divorcio <%= et('tipoDivorcio', tramite.tipo_divorcio) %></p>
+        <span class="estado-tag <%= tramite.estado === 'completado' ? 'completado' : '' %>">
+            <%= tramite.estado === 'completado' ? 'El proceso ha terminado' : 'Trámite en proceso' %>
+        </span>
+    </div>
+
+    <% secciones.forEach(function(s) { %>
+        <section class="rep-sec">
+            <h2><%= s.titulo %></h2>
+            <table>
+                <% s.filas.forEach(function(f) { %>
+                    <tr><th><%= f[0] %></th><td><%= f[1] %></td></tr>
+                <% }); %>
+            </table>
+        </section>
+    <% }); %>
+
+    <% if (d.reajustes && d.reajustes.length > 0) { %>
+        <section class="rep-sec">
+            <h2>Reajustes de plazos</h2>
+            <table>
+                <% d.reajustes.forEach(function(r) { %>
+                    <tr>
+                        <th><%= et('plazo', r.tipo_plazo) %></th>
+                        <td><%= fecha(r.fecha_anterior) %> → <%= fecha(r.fecha_nueva) %> · Motivo: <%= r.motivo %></td>
+                    </tr>
+                <% }); %>
+            </table>
+        </section>
+    <% } %>
+
+    <div class="rep-acciones">
+        <button type="button" onclick="window.print()">Imprimir / Guardar PDF</button>
+        <a href="/continuar-tramite/<%= tramite.id %>"><%= tramite.estado === 'completado' ? 'Editar trámite' : 'Continuar trámite' %></a>
+        <a href="/seguimiento">Mis trámites</a>
+    </div>
+
+</div>
+
+</body>
+</html>

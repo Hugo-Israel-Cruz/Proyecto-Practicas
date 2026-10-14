@@ -41,7 +41,12 @@
             <li><a href="/inicio">Inicio</a></li>
             <li><a href="/tramite">Trámites</a></li>
             <li><a href="">Contacto</a></li>
-            <li><a href="/login">Iniciar sesión</a></li>
+            <% if (usuario) { %>
+                <li><span style="color: #ffd700; font-weight: 600;">Hola, <%= usuario.nombre %></span></li>
+                <li><a href="/cerrar-sesion">Cerrar sesión</a></li>
+            <% } else { %>
+                <li><a href="/login">Iniciar sesión</a></li>
+            <% } %>
         </ul>
     </nav>
 </header>

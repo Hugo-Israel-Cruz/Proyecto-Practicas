@@ -621,12 +621,13 @@ nav a:hover{
 .plazo-contador {
     background: #fdf6e3;
     border-left: 4px solid #927009;
-    padding: 12px 18px;
+    padding: 15px 20px;
     margin-bottom: 20px;
     border-radius: 6px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .plazo-label {
@@ -641,6 +642,36 @@ nav a:hover{
     font-size: 1rem;
 }
 
+.plazo-conteo {
+    background: rgb(74, 47, 11);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.plazo-conteo .dias {
+    font-size: 1.4rem;
+    color: #ffd700;
+}
+
+.plazo-conteo .unidad {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.plazo-conteo.peligro {
+    background: #c0392b;
+}
+
+.plazo-conteo.peligro .dias {
+    color: white;
+}
+
 .espacio-firma {
     width: 100%;
     height: 80px;
@@ -650,6 +681,7 @@ nav a:hover{
 
 .pregunta input[type="number"],
 .pregunta input[type="date"],
+.pregunta input[type="text"],
 .pregunta textarea {
     width: 100%;
     padding: 12px 15px;
@@ -662,10 +694,12 @@ nav a:hover{
     resize: vertical;
     margin-bottom: 10px;
     box-sizing: border-box;
+    font-family: inherit;
 }
 
 .pregunta input[type="number"]:focus,
 .pregunta input[type="date"]:focus,
+.pregunta input[type="text"]:focus,
 .pregunta textarea:focus {
     border-color: #927009;
     box-shadow: 0 0 0 3px rgba(146, 112, 9, 0.15);
@@ -732,6 +766,35 @@ nav a:hover{
 }
 
 .check-item.req-opcional {
+    border-left: 4px solid #927009;
+}
+
+.check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #d6d9df;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.check-list .check-item {
+    margin-bottom: 0;
+    border: none;
+    border-bottom: 1px solid #e3e6eb;
+    border-radius: 0;
+}
+
+.check-list .check-item:last-child {
+    border-bottom: none;
+}
+
+.check-list .check-item.req-obligatorio {
+    border-left: 4px solid #c0392b;
+}
+
+.check-list .check-item.req-opcional {
     border-left: 4px solid #927009;
 }
 
@@ -862,109 +925,6 @@ nav a:hover{
     box-shadow: 0 0 0 3px rgba(146, 112, 9, 0.15);
 }
 
-.btn-imprimir {
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    border: none;
-    font-weight: 600;
-    background: #927009;
-    color: white;
-}
-
-.btn-imprimir:hover {
-    background: #ab880c;
-}
-
-@media print {
-    header,
-    .macro-timeline,
-    .step-actions,
-    .progress-container,
-    .sub-etapa h2,
-    .titulo-sub-etapa {
-        display: none !important;
-    }
-
-    .contenedor-form {
-        box-shadow: none;
-        margin: 0;
-        padding: 20px;
-        max-width: 100%;
-    }
-
-    .step-panel.active {
-        display: block !important;
-    }
-}
-
-.plazo-contador {
-    background: #fdf6e3;
-    border-left: 4px solid #927009;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.plazo-label {
-    font-weight: 700;
-    color: rgb(74, 47, 11);
-    font-size: 1rem;
-}
-
-.plazo-valor {
-    color: #927009;
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.plazo-conteo {
-    background: rgb(74, 47, 11);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.plazo-conteo .dias {
-    font-size: 1.4rem;
-    color: #ffd700;
-}
-
-.plazo-conteo .unidad {
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.plazo-conteo.peligro {
-    background: #c0392b;
-}
-
-.plazo-conteo.peligro .dias {
-    color: white;
-}
-
-.header-etapa {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header-etapa h1,
-.header-etapa h2 {
-    margin: 0;
-}
-
 .btn-imprimir-top {
     padding: 10px 22px;
     border-radius: 8px;
@@ -981,66 +941,6 @@ nav a:hover{
     background: #ab880c;
 }
 
-@media print {
-    header,
-    .macro-timeline,
-    .step-actions,
-    .progress-container,
-    .sub-etapa h2,
-    .titulo-sub-etapa,
-    .header-etapa button {
-        display: none !important;
-    }
-
-    .contenedor-form {
-        box-shadow: none;
-        margin: 0;
-        padding: 20px;
-        max-width: 100%;
-    }
-
-    .step-panel.active {
-        display: block !important;
-    }
-}
-
-.btn-imprimir-top {
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    font-weight: 600;
-    background: #927009;
-    color: white;
-    transition: 0.3s;
-}
-
-.btn-imprimir-top:hover {
-    background: #ab880c;
-}
-
-@media print {
-    header,
-    .macro-timeline,
-    .step-actions,
-    .progress-container,
-    .sub-etapa h2,
-    .titulo-sub-etapa {
-        display: none !important;
-    }
-
-    .contenedor-form {
-        box-shadow: none;
-        margin: 0;
-        padding: 20px;
-        max-width: 100%;
-    }
-
-    .step-panel.active {
-        display: block !important;
-    }
-}
 .layout-principal {
     display: flex;
     gap: 20px;
@@ -1057,7 +957,7 @@ nav a:hover{
 }
 
 .sidebar-calendario {
-    width: 350px;
+    width: 380px;
     position: sticky;
     top: 20px;
     background: white;
@@ -1072,6 +972,80 @@ nav a:hover{
     font-size: 1.1rem;
 }
 
+#calendario-wrapper {
+    all: revert;
+}
+
+#calendario-wrapper * {
+    box-sizing: border-box;
+}
+
+#calendario {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.85rem;
+}
+
+#calendario .fc {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#calendario .fc-toolbar-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(74, 47, 11);
+}
+
+#calendario .fc-button {
+    background-color: rgb(74, 47, 11);
+    border-color: rgb(74, 47, 11);
+    text-transform: capitalize;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+}
+
+#calendario .fc-button:hover {
+    background-color: #927009;
+    border-color: #927009;
+}
+
+#calendario .fc-button:focus {
+    box-shadow: 0 0 0 2px rgba(146, 112, 9, 0.3);
+}
+
+#calendario .fc-daygrid-day-number {
+    color: #1e2f3e;
+    font-weight: 600;
+    padding: 4px;
+}
+
+#calendario .fc-day-today {
+    background-color: #fdf6e3 !important;
+}
+
+#calendario .fc-col-header-cell-cushion {
+    color: rgb(74, 47, 11);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 6px 0;
+    text-decoration: none;
+}
+
+#calendario .fc-scrollgrid {
+    border: 1px solid #e0e7ef;
+}
+
+#calendario .fc-scrollgrid td,
+#calendario .fc-scrollgrid th {
+    border-color: #e0e7ef;
+}
+
+#calendario .fc-event {
+    font-size: 0.7rem;
+    padding: 1px 3px;
+    border-radius: 3px;
+}
+
 .detalle-dia {
     margin-top: 15px;
     padding: 12px;
@@ -1084,7 +1058,7 @@ nav a:hover{
 
 .input-otros {
     width: 100%;
-    min-height: 60px;
+    min-height: 80px;
     padding: 12px 15px;
     font-size: 15px;
     border: 1px solid #cfd4da;
@@ -1092,6 +1066,7 @@ nav a:hover{
     margin-top: 8px;
     font-family: inherit;
     resize: vertical;
+    box-sizing: border-box;
 }
 
 .reajustar-container {
@@ -1106,6 +1081,7 @@ nav a:hover{
     font-weight: 600;
     color: rgb(74, 47, 11);
     cursor: pointer;
+    margin: 0;
 }
 
 .grupo-motivo {
@@ -1119,6 +1095,7 @@ nav a:hover{
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .grupo-calendario {
@@ -1131,6 +1108,7 @@ nav a:hover{
     border: 1px solid #cfd4da;
     border-radius: 8px;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 .grupo-prestaciones {
@@ -1158,6 +1136,18 @@ nav a:hover{
     opacity: 0.8;
 }
 
+#etapaPreliminar .step-panel,
+#etapaJuicio .step-panel,
+#etapaRegistroCivil .step-panel {
+    display: none;
+}
+
+#etapaPreliminar .step-panel.active,
+#etapaJuicio .step-panel.active,
+#etapaRegistroCivil .step-panel.active {
+    display: block;
+}
+
 @media (max-width: 1024px) {
     .layout-principal {
         flex-direction: column;
@@ -1168,3 +1158,193 @@ nav a:hover{
     }
 }
 
+@media print {
+    header,
+    .macro-timeline,
+    .step-actions,
+    .progress-container,
+    .sub-etapa h2,
+    .titulo-sub-etapa,
+    .sidebar-calendario {
+        display: none !important;
+    }
+
+    .contenedor-form {
+        box-shadow: none;
+        margin: 0;
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .step-panel.active {
+        display: block !important;
+    }
+}
+
+/* --------------------------SEGUIMIENTO------------------------------- */
+
+.contenedor-seguimiento {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.seguimiento-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.seguimiento-encabezado h1 {
+    color: rgb(74, 47, 11);
+    margin: 0;
+    font-size: 2rem;
+}
+
+.btn-nuevo-tramite {
+    background: rgb(74, 47, 11);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.btn-nuevo-tramite:hover {
+    background: #927009;
+}
+
+.seguimiento-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8f9fb;
+    border-radius: 12px;
+    border: 1px solid #e3e6eb;
+}
+
+.seguimiento-vacio p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.lista-tramites {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+.tarjeta-tramite {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #927009;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.tarjeta-tramite:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+}
+
+.tarjeta-tramite-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tarjeta-tramite-encabezado h3 {
+    color: rgb(74, 47, 11);
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.estado-tag {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.estado-tag.completado {
+    background: #d4edda;
+    color: #155724;
+}
+
+.estado-tag.en-proceso {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.tarjeta-tramite-cuerpo {
+    margin-bottom: 20px;
+}
+
+.tarjeta-tramite-cuerpo p {
+    margin: 8px 0;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.tarjeta-tramite-cuerpo strong {
+    color: rgb(74, 47, 11);
+}
+
+.tarjeta-tramite-acciones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.boton-accion {
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.boton-continuar {
+    background: rgb(74, 47, 11);
+    color: white;
+}
+
+.boton-continuar:hover {
+    background: #927009;
+}
+
+.boton-reporte {
+    background: #e8edf2;
+    color: rgb(74, 47, 11);
+}
+
+.boton-reporte:hover {
+    background: #d5dce4;
+}
+
+@media (max-width: 600px) {
+    .seguimiento-encabezado {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lista-tramites {
+        grid-template-columns: 1fr;
+    }
+}

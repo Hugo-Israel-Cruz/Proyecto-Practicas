@@ -3,74 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Seguimiento del Proceso</title>
+    <title>JUSDATA - Mis trámites</title>
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/tramite.css">
-    <link rel="stylesheet" href="/css/seguimiento.css">
 </head>
 
 <body>
 
 <header>
-    <div class="logo"><a href="/inicio">JusData</a></div>
-
+    <div class="logo"><a href="/inicio">JUSDATA</a></div>
     <nav>
         <ul>
             <li><a href="/inicio">Inicio</a></li>
             <li><a href="/tramite">Trámites</a></li>
             <li><a href="">Contacto</a></li>
-            <li><a href="/inicio">Cerrar sesión</a></li>
+            <% if (usuario) { %>
+                <li><span style="color: #ffd700; font-weight: 600;">Hola, <%= usuario.nombre %></span></li>
+                <li><a href="/cerrar-sesion">Cerrar sesión</a></li>
+            <% } else { %>
+                <li><a href="/login">Iniciar sesión</a></li>
+            <% } %>
         </ul>
     </nav>
 </header>
 
-<div class="seguimiento-page">
+<div class="contenedor-seguimiento">
 
-    <section class="seguimiento-intro">
-        <div class="container">
-            <h1>Seguimiento del Proceso</h1>
-            <p>Consulta el estado actual de tus trámites de divorcio</p>
+    <div class="seguimiento-encabezado">
+        <h1>Mis trámites</h1>
+        <a href="/nuevo-tramite" class="btn-nuevo-tramite">+ Nuevo trámite</a>
+    </div>
+
+    <% if (typeof tramites === 'undefined' || tramites.length === 0) { %>
+
+        <div class="seguimiento-vacio">
+            <p>Aún no tienes trámites registrados.</p>
+            <a href="/tramite" class="btn-primary">Comenzar un trámite</a>
         </div>
-    </section>
 
-    <section class="seguimiento-resumen">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <i class="fas fa-folder-open"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Trámites totales</span>
+    <% } else { %>
+
+        <div class="lista-tramites">
+            <% tramites.forEach(function(t) { %>
+                <div class="tarjeta-tramite">
+
+                    <div class="tarjeta-tramite-encabezado">
+                        <h3>Folio: <%= t.folio %></h3>
+                        <span class="estado-tag <%= t.estado === 'completado' ? 'completado' : 'en-proceso' %>">
+                            <%= t.estado === 'completado' ? 'Completado' : 'En proceso' %>
+                        </span>
+                    </div>
+
+                    <div class="tarjeta-tramite-cuerpo">
+                        <p><strong>Tipo:</strong> <%= t.tipo_texto %></p>
+                        <p><strong>Etapa actual:</strong> <%= t.etapa_texto %></p>
+                        <p><strong>Fecha de inicio:</strong> <%= new Date(t.fecha_inicio).toLocaleDateString('es-MX') %></p>
+                    </div>
+
+                    <div class="tarjeta-tramite-acciones">
+                        <a href="/continuar-tramite/<%= t.id %>" class="boton-accion boton-continuar">
+                            <%= t.estado === 'completado' ? 'Ver / Editar' : 'Continuar trámite' %>
+                        </a>
+                        <a href="/reporte/<%= t.id %>" class="boton-accion boton-reporte">
+                            Ver reporte
+                        </a>
+                    </div>
+
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-hourglass-half"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">En proceso</span>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-check-circle"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Completados</span>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-pause-circle"></i>
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Pendientes</span>
-                </div>
-            </div>
+            <% }); %>
         </div>
-    </section>
 
-    <section class="seguimiento-lista">
-        <div class="container">
-            <h2>Mis trámites</h2>
-
-            <div class="empty-state">
-                <i class="fas fa-inbox"></i>
-                <p>No tienes trámites registrados todavía.</p>
-                <a href="/tramite" class="btn-detalle">Iniciar un trámite</a>
-            </div>
-        </div>
-    </section>
+    <% } %>
 
 </div>
 

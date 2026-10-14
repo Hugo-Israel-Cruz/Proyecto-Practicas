@@ -11,6 +11,10 @@
         <div class="login-box">
             <h2>Crear Cuenta</h2>
 
+            <% if (typeof error !== 'undefined' && error) { %>
+                <p style="color: red; margin-bottom: 15px; font-weight: 600;"><%= error %></p>
+            <% } %>
+
             <form action="/registro" method="POST">
 
                 <label for="nombre">Nombre</label>

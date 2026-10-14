@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JUSDATA - Procedimiento de Divorcio</title>
-    <link rel="stylesheet" href="/css/style.css">
+
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/es.global.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -17,9 +19,14 @@
     <nav>
         <ul>
             <li><a href="/inicio">Inicio</a></li>
-            <li><a href="/tramite">Trámites</a></li>
+            <li><a href="/seguimiento">Trámites</a></li>
             <li><a href="">Contacto</a></li>
-            <li><a href="/inicio">Cerrar sesión</a></li>
+            <% if (usuario) { %>
+                <li><span style="color: #ffd700; font-weight: 600;">Hola, <%= usuario.nombre %></span></li>
+                <li><a href="/cerrar-sesion">Cerrar sesión</a></li>
+            <% } else { %>
+                <li><a href="/login">Iniciar sesión</a></li>
+            <% } %>
         </ul>
     </nav>
 </header>
@@ -274,7 +281,7 @@
                         <label><input type="checkbox" name="tipoBienes" value="otros" id="checkBienesOtros"> Otros</label>
                     </div>
 
-                    <input type="text" name="bienesOtros" id="bienesOtros" class="oculto input-otros" placeholder="Especifica qué otros bienes">
+                    <textarea name="bienesOtros" id="bienesOtros" class="oculto input-otros" placeholder="Especifica qué otros bienes" rows="3"></textarea>
                 </div>
 
                 <div class="step-actions">
@@ -316,7 +323,7 @@
                         <label><input type="checkbox" name="prestaciones" value="pension_alimenticia_definitiva"> Pensión alimenticia definitiva</label>
                         <label><input type="checkbox" name="prestaciones" value="otros" id="checkPrestacionesOtros"> Otros</label>
                     </div>
-                    <input type="text" name="prestacionesOtros" id="prestacionesOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones">
+                    <textarea name="prestacionesOtros" id="prestacionesOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones" rows="3"></textarea>
 
                     <label class="check-item req-obligatorio">
                         <input type="checkbox" name="hechos">
@@ -342,7 +349,7 @@
                         <label><input type="checkbox" name="pruebas" value="parte_propia"> Declaración de parte propia</label>
                         <label><input type="checkbox" name="pruebas" value="otros" id="checkPruebasOtros"> Otros</label>
                     </div>
-                    <input type="text" name="pruebasOtros" id="pruebasOtros" class="oculto input-otros" placeholder="Especifica otras pruebas">
+                    <textarea name="pruebasOtros" id="pruebasOtros" class="oculto input-otros" placeholder="Especifica otras pruebas" rows="3"></textarea>
 
                     <label class="check-item req-obligatorio">
                         <input type="checkbox" name="firmaFecha">
@@ -531,7 +538,7 @@
                                 <label><input type="checkbox" name="prestacionesReconvencion" value="pension_alimenticia_definitiva"> Pensión alimenticia definitiva</label>
                                 <label><input type="checkbox" name="prestacionesReconvencion" value="otros" id="checkPrestacionesReconvencionOtros"> Otros</label>
                             </div>
-                            <input type="text" name="prestacionesReconvencionOtros" id="prestacionesReconvencionOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones">
+                            <textarea name="prestacionesReconvencionOtros" id="prestacionesReconvencionOtros" class="oculto input-otros" placeholder="Especifica otras prestaciones" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -784,8 +791,8 @@
                     <div class="pregunta">
                         <span class="texto-pregunta">Sentencia</span>
                         <div class="checkbox-group">
-                            <label><input type="checkbox" name="sentencia" value="favor"> A favor</label>
-                            <label><input type="checkbox" name="sentencia" value="contra"> En contra</label>
+                            <label><input type="radio" name="sentencia" value="favor"> A favor</label>
+                            <label><input type="radio" name="sentencia" value="contra"> En contra</label>
                         </div>
 
                         <label>4.1) Apelación a puntos resolutivos</label>
@@ -834,8 +841,8 @@
                     <div class="pregunta">
                         <span class="texto-pregunta">Inscripción del Divorcio</span>
                         <div class="checkbox-group">
-                            <label><input type="checkbox" name="inscripcion" value="realizada"> Inscripción realizada</label>
-                            <label><input type="checkbox" name="inscripcion" value="pendiente"> Inscripción pendiente</label>
+                            <label><input type="radio" name="inscripcion" value="realizada"> Inscripción realizada</label>
+                            <label><input type="radio" name="inscripcion" value="pendiente"> Inscripción pendiente</label>
                         </div>
                     </div>
 
@@ -850,19 +857,29 @@
         </div>
 
         <div class="mensaje-final oculto" id="mensajeFinal">
-            <h2>El Proceso de demanda ha terminado</h2>
-        </div>
+    <h2>El Proceso de demanda ha terminado</h2>
+    <p>Tu trámite ha sido registrado exitosamente.</p>
+    <div class="acciones-finales">
+        <button type="button" class="btn-primary" onclick="verReporte()">Ver reporte completo</button>
+        <a href="/seguimiento" class="btn-secondary">Ir a mis trámites</a>
+    </div>
+</div>
 
     </div>
 
     <aside class="sidebar-calendario">
         <h3>Calendario de plazos</h3>
-        <div id="calendario"></div>
+        <div id="calendario-wrapper">
+            <div id="calendario"></div>
+        </div>
         <div id="detalleDia" class="detalle-dia oculto"></div>
     </aside>
 
 </div>
 
+<script>
+    window.DATOS_TRAMITE = <%- datosJSON %>;
+</script>
 <script src="/js/tramite.js"></script>
 </body>
 </html>
